@@ -7,7 +7,6 @@ package Domain.Autocamper;
 public abstract class Autocamper {
 
     private String modelYear;
-    private String kitchenFacilityType;
     private int numberOfBeds;
     private String heatingSystem;
     private int size;

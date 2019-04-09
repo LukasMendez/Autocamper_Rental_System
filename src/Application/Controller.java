@@ -1,67 +1,55 @@
 package Application;
 
-import javafx.application.Application;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import Domain.Customer;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import javafx.scene.control.TableView;
 
 /**
  * Created by Lukas
- * 08-04-2019.
+ * 09-04-2019.
  */
-public class Controller extends Application {
-
-    // CONTAINERS
-    BorderPane root;
-    VBox vBox;
-
-    // BUTTONS
-    Button rentAutoCamperButton = new Button("Rent an Auto Camper");
+public class Controller {
 
 
+    @FXML
+    private TableView tableView;
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-
-        root = new BorderPane();
-        vBox = new VBox();
-
-        root.setLeft(vBox);
-        vBox.setStyle("-fx-background-color: GREY");
+    @FXML
+    private Button makeReservationButton;
 
 
-        vBox.getChildren().addAll(rentAutoCamperButton);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        Scene scene = new Scene(root, 700,600);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-
-
+    @FXML
+    public void initialize(){
+        tableView.setVisible(true);
 
 
     }
+
+
+
+
+
+
+
+    @FXML
+    public void handleAddCustomer()
+    {
+        Customer currentCustomer = new Customer();
+
+        if (currentCustomer.addCustomer("","","","",0))
+        {
+            //Create password
+        }
+        else
+        {
+            //Inform customer that his/hers information already exist in the database
+            //Change scene so customer can input password
+        }
+    }
+
+
+
 
 
 

@@ -18,11 +18,6 @@ public class Customer {
     private int loyaltyGrade = 0; // Initial value for new customers
 
 
-    public Customer(){
-
-    }
-
-
 
     public boolean addCustomer(String name, String driverLicenceNo, String phoneNo, String streetName, int zipCode){
 
