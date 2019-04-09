@@ -5,4 +5,14 @@ package Domain.Autocamper;
  * 08-04-2019.
  */
 public abstract class Autocamper {
+
+    private String modelYear;
+    private String kitchenFacilityType;
+    private int numberOfBeds;
+    private String heatingSystem;
+    private int size;
+    private String description;
+
+
+
 }

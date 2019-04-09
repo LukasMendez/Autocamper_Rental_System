@@ -18,7 +18,13 @@ public class Customer {
     private int loyaltyGrade = 0; // Initial value for new customers
 
 
-    public Customer(String name, String driverLicenceNo, String phoneNo, String streetName, int zipCode){
+    public Customer(){
+
+    }
+
+
+
+    public boolean addCustomer(String name, String driverLicenceNo, String phoneNo, String streetName, int zipCode){
 
 
         // IF ZERO RECORDS ARE FOUND WITH THE GIVEN DRIVER LICENCE NUMBER, WE ASSUME THAT THE CUSTOMER IS NOT REGISTERED
@@ -33,6 +39,8 @@ public class Customer {
 
             // TODO ADD THE INFORMATION TO THE DATABASE AS WELL
 
+            return true;
+
 
         } else {
 
@@ -41,16 +49,9 @@ public class Customer {
 
             // TODO PERHAPS USE THE EXISTING CUSTOMER INFO, BUT AVOID ADDING IT TO THE DATABASE AGAIN
 
+            return false;
+
         }
-
-
-
-
-
-
-
-
-
 
 
     }
