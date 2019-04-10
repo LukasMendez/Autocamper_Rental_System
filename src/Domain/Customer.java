@@ -13,6 +13,7 @@ public class Customer {
     private String phoneNo;
     private String streetName;
     private int zipCode;
+    private String password;
 
     // GRADE: 1, 2 or 3. The higher the better
     private int loyaltyGrade = 0; // Initial value for new customers
@@ -41,14 +42,30 @@ public class Customer {
     }
 
 
-    public void addCustomer(String name, String driverLicenceNo, String phoneNo, String streetName, int zipCode)
+    public boolean addCustomer(String name, String driverLicenceNo, String phoneNo, String streetName, int zipCode, String password)
     {
 
-        this.name=name;
-        this.driverLicenceNo=driverLicenceNo;
-        this.phoneNo=phoneNo;
-        this.streetName=streetName;
-        this.zipCode=zipCode;
+
+        // WILL TRY TO ADD THE INFORMATION TO THE DATABASE, BUT ONLY CREATE A CUSTOMER INSTANCE IF 1 ROW IS AFFECTED
+        // THIS MEANS THAT THE INFORMATION WAS REGISTERED SUCCESSFULLY WITHOUT ANY ERRORS
+
+        if (DBFunction.insertCustomer(name,driverLicenceNo,phoneNo,streetName,zipCode,password)==1){
+
+            this.name=name;
+            this.driverLicenceNo=driverLicenceNo;
+            this.phoneNo=phoneNo;
+            this.streetName=streetName;
+            this.zipCode=zipCode;
+            this.password=password;
+
+            return true;
+
+        } else {
+
+            System.out.println("Customer Class: No records were created. You probably have one record with that phone number already");
+
+            return false;
+        }
 
         // TODO ADD THE INFORMATION TO THE DATABASE AS WELL
 

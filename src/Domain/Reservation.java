@@ -12,13 +12,13 @@ public class Reservation {
 
 
 
-    public boolean enterCustomerInformation(String name, String driverLicenceNo, String phoneNo, String streetName, int zipCode){
+    public boolean enterCustomerInformation(String name, String driverLicenceNo, String phoneNo, String streetName, int zipCode, String password){
 
 
         // Adds new customer
         customer = new Customer();
 
-        customer.addCustomer(name,driverLicenceNo,phoneNo,streetName,zipCode);
+        customer.addCustomer(name,driverLicenceNo,phoneNo,streetName,zipCode, password);
 
 
         //TODO GRASP PATTERN: Information Expert <---- Should we move this to the Customer class?

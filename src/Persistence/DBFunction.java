@@ -1,5 +1,6 @@
 package Persistence;
 
+import Domain.Customer;
 import Foundation.DB;
 
 import java.sql.Connection;
@@ -61,7 +62,49 @@ public class DBFunction {
     }
 
 
+    /**
+     *
+     * This method uses a stored procedure from the DB_Autocamper database. The purpose is to simply add the information
+     * into a new record. This is however used as a helper-method for the method addCustomer in the Customer class.
+     * @param name name of the customer
+     * @param driverLicenceNo driver licence number of the person responsible
+     * @param phoneNo phone number which is the main key
+     * @param streetName address
+     * @param zipCode zip code of the customer
+     * @param password the password he or she will use to login again
+     * @return amount of rows affected
+     */
 
+    public static int insertCustomer(String name, String driverLicenceNo, String phoneNo, String streetName, int zipCode, String password){
+
+        int returnVal = 0;
+
+        try{
+            PreparedStatement ps = con.prepareCall("EXEC dbo.addCustomer ?,?,?,?,?,?");
+            ps.setString(1,name);
+            ps.setString(2,driverLicenceNo);
+            ps.setString(3,phoneNo);
+            ps.setString(4,streetName);
+            ps.setInt(5,zipCode);
+            ps.setString(6,password);
+
+            returnVal = ps.executeUpdate();
+
+            System.out.println("Rows affected: " + returnVal);
+
+
+
+        } catch (Exception e){
+
+            System.err.println(e.getMessage());
+
+        }
+
+
+        return returnVal;
+
+
+    }
 
 
 
