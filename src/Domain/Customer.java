@@ -1,6 +1,6 @@
 package Domain;
 
-import Persistence.DB;
+import Persistence.DBFunction;
 
 /**
  * Created by Lukas
@@ -18,41 +18,43 @@ public class Customer {
     private int loyaltyGrade = 0; // Initial value for new customers
 
 
-
-    public boolean addCustomer(String name, String driverLicenceNo, String phoneNo, String streetName, int zipCode){
-
-
-        // IF ZERO RECORDS ARE FOUND WITH THE GIVEN DRIVER LICENCE NUMBER, WE ASSUME THAT THE CUSTOMER IS NOT REGISTERED
-        if (DB.select("select * from tblCustomer where fldDriverLicenceNo'"+driverLicenceNo+"'")==0){
-
-            this.name=name;
-            this.driverLicenceNo=driverLicenceNo;
-            this.phoneNo=phoneNo;
-            this.streetName=streetName;
-            this.zipCode=zipCode;
+    /**
+     * Will return true if there's already a customer with that phone number in the database, and false if not.
+     * This method uses a helper method from the DBFunction to work the database.
+     * @param phoneNo the phone number that is given (or being checked)
+     * @return true if there's a mathc, false if not.
+     */
 
 
-            // TODO ADD THE INFORMATION TO THE DATABASE AS WELL
-
+    public boolean checkPhoneNo(String phoneNo)
+    {
+        if (DBFunction.checkPhoneNumber(phoneNo)>=1)
+        {
+            System.out.println("There was found a match with that phone number");
             return true;
-
-
-        } else {
-
-
-            // TODO DISPLAY AND TELL THE USER THAT A USER ACCOUNT WITH THE GIVEN LICENCE NUMBER ALREADY EXIST
-
-            // TODO PERHAPS USE THE EXISTING CUSTOMER INFO, BUT AVOID ADDING IT TO THE DATABASE AGAIN
-
-            return false;
-
         }
-
-
+        else
+        {
+            System.out.println("No records were found with that phone number");
+            return false;
+        }
     }
 
 
+    public void addCustomer(String name, String driverLicenceNo, String phoneNo, String streetName, int zipCode)
+    {
 
+        this.name=name;
+        this.driverLicenceNo=driverLicenceNo;
+        this.phoneNo=phoneNo;
+        this.streetName=streetName;
+        this.zipCode=zipCode;
+
+        // TODO ADD THE INFORMATION TO THE DATABASE AS WELL
+
+    }
+
+    //TODO implement getter and setters for all instance variables
 
 
 
