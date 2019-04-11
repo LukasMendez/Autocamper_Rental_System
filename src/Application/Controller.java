@@ -145,6 +145,7 @@ public class Controller {
                     infoLabel.setTextFill(Color.BLACK);
                     infoLabel.setVisible(true);
 
+                    loginMode=true;
                     loginScreen();
 
                 } else {
@@ -177,6 +178,7 @@ public class Controller {
 
                 if (currentCustomer!=null){
 
+                    infoLabel.setTextFill(Color.GREEN);
                     infoLabel.setText("PASSWORD WAS CORRECT! DEBUGGING");
 
                     // TODO THE CUSTOMER IS NOW LOGGED IN AND WILL BE ABLE TO CHOOSE AN AUTOCAMPER
@@ -229,8 +231,10 @@ public class Controller {
         // Will make sure that only phone number text field is displayed
         nameTextfield.setVisible(false);
         streetTextfield.setVisible(false);
+        phoneNoTextfield.setVisible(true);
         passwordField.setVisible(true);
         confirmCustomerInfo.setVisible(true);
+        licenceTextfield.setVisible(false);
 
         // Will make sure that zip code text field and street text field are removed, so that the password field is
         // the only visible node in the middleHBox and also aligned perfectly with the phone number text field
@@ -239,6 +243,9 @@ public class Controller {
         infoLabel.setVisible(true);
         infoLabel.setTextFill(Color.BLACK);
         infoLabel.setText("Please login with your existing account");
+
+        // Will change the button text
+        confirmCustomerInfo.setText("Log in");
 
     }
 
@@ -270,6 +277,7 @@ public class Controller {
         else
         {
 
+            loginMode=false;
             rebuildRegistrationPage();
 
         }
@@ -290,8 +298,8 @@ public class Controller {
         nameTextfield.setVisible(true);
         licenceTextfield.setVisible(true);
 
-        // Will make sure that password gets back to its old position:
-        middleHBox.getChildren().remove(passwordField);
+        // Will make sure the nodes back in its old order
+        middleHBox.getChildren().removeAll(streetTextfield,zipTextfield,passwordField);
 
         middleHBox.getChildren().addAll(streetTextfield,zipTextfield,passwordField);
 
@@ -303,6 +311,9 @@ public class Controller {
         passwordField.setText("");
 
         confirmCustomerInfo.setVisible(true);
+
+        //Will change the login text back to confirm
+        confirmCustomerInfo.setText("Confirm");
 
     }
 
