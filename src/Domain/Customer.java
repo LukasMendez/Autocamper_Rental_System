@@ -51,27 +51,49 @@ public class Customer {
 
         if (DBFunction.insertCustomer(name,driverLicenceNo,phoneNo,streetName,zipCode,password)==1){
 
-            this.name=name;
-            this.driverLicenceNo=driverLicenceNo;
-            this.phoneNo=phoneNo;
-            this.streetName=streetName;
-            this.zipCode=zipCode;
-            this.password=password;
+
+            assignInfoToCustomerObject(name,driverLicenceNo,phoneNo,streetName,zipCode,0,password);
 
             return true;
 
         } else {
 
-            System.out.println("Customer Class: No records were created. You probably have one record with that phone number already");
+            System.out.println("Customer Class: No records were created. You either have a record with that phone number or driver licence already");
 
             return false;
         }
 
-        // TODO ADD THE INFORMATION TO THE DATABASE AS WELL
 
     }
 
-    //TODO implement getter and setters for all instance variables
+    /**
+     * Used for both creating new customers, but also retrieving information about an existing customer
+     * @param name name of the customer
+     * @param driverLicenceNo driver licence number of the person responsible
+     * @param phoneNo phone number which is the main key
+     * @param streetName address
+     * @param zipCode zip code of the customer
+     * @param loyaltyGrade loyalty grade of customer. If it's a new customer, this one is usually set to 0
+     * @param password the password he or she will use to login again
+     */
+    public void assignInfoToCustomerObject(String name, String driverLicenceNo, String phoneNo, String streetName, int zipCode, int loyaltyGrade, String password){
+
+
+        this.name=name;
+        this.driverLicenceNo=driverLicenceNo;
+        this.phoneNo=phoneNo;
+        this.streetName=streetName;
+        this.zipCode=zipCode;
+        this.loyaltyGrade=loyaltyGrade;
+        this.password=password;
+
+
+
+
+
+
+    }
+
 
 
 

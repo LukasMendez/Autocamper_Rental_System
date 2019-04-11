@@ -2,9 +2,12 @@ package Application;
 
 import Domain.Customer;
 import Foundation.DB;
+import Persistence.DBFunction;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 /**
@@ -52,7 +55,7 @@ public class Controller {
     @FXML
     private PasswordField passwordField;
 
-    // HBOX
+    // HBOX & VBOX
     @FXML
     private HBox topHBox;
     @FXML
@@ -62,7 +65,15 @@ public class Controller {
     @FXML
     private HBox checkButtonHBox;
 
+    @FXML
+    private VBox mainVbox;
+    @FXML
+    private VBox otherVbox; // NOT SURE IF WE WILL EVER USE THIS
 
+
+
+    // When you press the "Confirm" button. The output will depend on this boolean
+    private boolean loginMode = false;
 
     @FXML
     public void initialize(){
@@ -76,6 +87,15 @@ public class Controller {
     @FXML
     public void handleMakeReservation()
     {
+
+        loginMode=false;
+
+        passwordField.setVisible(false);
+        confirmCustomerInfo.setVisible(false);
+        infoLabel.setVisible(false);
+
+
+
         headLabel.setText("Please enter your phone number");
         topHBox.setVisible(true);
         checkButtonHBox.setVisible(true);
@@ -85,12 +105,19 @@ public class Controller {
 
 
     /**
+     * Attached to the "Check button" and has two functions
      *
-     * This method will pass the information to a stored procedure and return true if it was entered successfully.
+     * If loginMode is false:
+     *
+     * This method will pass the user information to a stored procedure and return true if it was entered successfully.
      * The criteria for a successful record insertion is to have a unique driver licence, but also phone number as the
      * phone number will be used for logging into the system. Therefore we can't have more than one record with the same phone number.
      *
      * The method also lets the user know if anything went wrong or if the data was saved successfully.
+     *
+     * If loginMode is true:
+     *
+     * Will //TODO WRITE WHAT IT ACTUALLY DOES
      *
      */
 
@@ -100,43 +127,128 @@ public class Controller {
     {
         Customer currentCustomer = new Customer();
 
-        // Will check if all fields are filled
-        if (!nameTextfield.getText().equals("") && !licenceTextfield.getText().equals("") && !phoneNoTextfield.getText().equals("") && !streetTextfield.getText().equals("") && !zipTextfield.getText().equals("") && !passwordField.getText().equals(""))
-        {
 
-            boolean addedCustomerSuccess = currentCustomer.addCustomer(nameTextfield.getText(),licenceTextfield.getText(),phoneNoTextfield.getText(),streetTextfield.getText(),Integer.parseInt(zipTextfield.getText()),passwordField.getText());
+        if (!loginMode){
 
-            // If none of the given information was rejected it will save and inform the customer that everything went well
-            if (addedCustomerSuccess){
+            // Will check if all fields are filled
+            if (!nameTextfield.getText().equals("") && !licenceTextfield.getText().equals("") && !phoneNoTextfield.getText().equals("") && !streetTextfield.getText().equals("") && !zipTextfield.getText().equals("") && !passwordField.getText().equals(""))
+            {
 
-                System.out.println("Saved data successfully");
+                boolean addedCustomerSuccess = currentCustomer.addCustomer(nameTextfield.getText(),licenceTextfield.getText(),phoneNoTextfield.getText(),streetTextfield.getText(),Integer.parseInt(zipTextfield.getText()),passwordField.getText());
 
-                infoLabel.setText("The info was saved successfully");
-                infoLabel.setTextFill(Color.BLACK);
-                infoLabel.setVisible(true);
-            } else {
+                // If none of the given information was rejected it will save and inform the customer that everything went well
+                if (addedCustomerSuccess){
 
-                System.out.println("Controller Class: There was something wrong with the data. Please check for errors");
+                    System.out.println("Saved data successfully");
 
-                infoLabel.setText("You have entered incorrect information. Please try again!");
+                    infoLabel.setText("The info was saved successfully");
+                    infoLabel.setTextFill(Color.BLACK);
+                    infoLabel.setVisible(true);
+
+                    loginScreen();
+
+                } else {
+
+                    System.out.println("Controller Class: There was something wrong with the data. Please check for errors");
+
+                    infoLabel.setText("You have entered incorrect information. Please try again!");
+                    infoLabel.setTextFill(Color.RED);
+                    infoLabel.setVisible(true);
+                }
+
+            }
+            else
+            {
+
+                infoLabel.setText("You need to fill all the fields to continue!");
                 infoLabel.setTextFill(Color.RED);
                 infoLabel.setVisible(true);
 
+            }
+
+            // If loginMode is ON
+        } else {
+
+
+            if (!phoneNoTextfield.equals("") && !passwordField.equals("")){
+
+
+                currentCustomer = DBFunction.getExistingCustomer(phoneNoTextfield.getText(),passwordField.getText());
+
+                if (currentCustomer!=null){
+
+                    infoLabel.setText("PASSWORD WAS CORRECT! DEBUGGING");
+
+                    // TODO THE CUSTOMER IS NOW LOGGED IN AND WILL BE ABLE TO CHOOSE AN AUTOCAMPER
+
+                } else {
+
+                    infoLabel.setText("Your password or phone number is incorrect. Please check again!");
+                    infoLabel.setTextFill(Color.RED);
+                    infoLabel.setVisible(true);
+
+                }
+
+
+
+
+
+
+            } else {
+
+                infoLabel.setText("Please fill all the fields");
+                infoLabel.setTextFill(Color.RED);
+                infoLabel.setVisible(true);
 
             }
 
 
 
-        }
-        else
-        {
 
-            infoLabel.setText("You need to fill all the fields to continue!");
-            infoLabel.setTextFill(Color.RED);
-            infoLabel.setVisible(true);
 
         }
+
+
+
     }
+
+    /**
+     *
+     * Will present the user with a login screen. Mostly used to avoid duplicate code
+     *
+     */
+
+    @FXML
+    private void loginScreen(){
+
+
+        checkButtonHBox.setVisible(false);
+        middleHBox.setVisible(true);
+        bottomHBox.setVisible(true);
+
+        // Will make sure that only phone number text field is displayed
+        nameTextfield.setVisible(false);
+        streetTextfield.setVisible(false);
+        passwordField.setVisible(true);
+        confirmCustomerInfo.setVisible(true);
+
+        // Will make sure that zip code text field and street text field are removed, so that the password field is
+        // the only visible node in the middleHBox and also aligned perfectly with the phone number text field
+        middleHBox.getChildren().removeAll(zipTextfield, streetTextfield);
+
+        infoLabel.setVisible(true);
+        infoLabel.setTextFill(Color.BLACK);
+        infoLabel.setText("Please login with your existing account");
+
+    }
+
+
+    /**
+     *
+     * Will check the database to see if the customer is registered and then present him with a login screen.
+     * If not a registration page will appear
+     *
+     */
 
     @FXML
     public void handleCheckPhoneNo()
@@ -145,18 +257,56 @@ public class Controller {
 
         if (currentCustomer.checkPhoneNo(phoneNoTextfield.getText()))
         {
-            //Inform customer that his/hers information already exist in the database
-            //TODO Change scene so customer can input password
+
+            System.out.println("This phone number already exist in the database");
+
+            loginMode=true;
+
+            loginScreen();
+
         }
+
+        // If the user isn't registered
         else
         {
-            checkButtonHBox.setVisible(false);
-            middleHBox.setVisible(true);
-            bottomHBox.setVisible(true);
-            nameTextfield.setVisible(true);
-            licenceTextfield.setVisible(true);
+
+            rebuildRegistrationPage();
+
         }
     }
+
+    /**
+     *
+     * Used for rebuilding registration page. Mostly used for avoiding duplicate code
+     *
+     */
+
+    private void rebuildRegistrationPage(){
+
+        checkButtonHBox.setVisible(false);
+        middleHBox.setVisible(true);
+        bottomHBox.setVisible(true);
+
+        nameTextfield.setVisible(true);
+        licenceTextfield.setVisible(true);
+
+        // Will make sure that password gets back to its old position:
+        middleHBox.getChildren().remove(passwordField);
+
+        middleHBox.getChildren().addAll(streetTextfield,zipTextfield,passwordField);
+
+        streetTextfield.setVisible(true);
+        zipTextfield.setVisible(true);
+        passwordField.setVisible(true);
+
+        // Clear password field if used previously
+        passwordField.setText("");
+
+        confirmCustomerInfo.setVisible(true);
+
+    }
+
+
 
 
     @FXML

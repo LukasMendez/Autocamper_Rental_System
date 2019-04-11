@@ -77,6 +77,7 @@ public class DBFunction {
 
     public static int insertCustomer(String name, String driverLicenceNo, String phoneNo, String streetName, int zipCode, String password){
 
+        // Rows affected
         int returnVal = 0;
 
         try{
@@ -111,12 +112,68 @@ public class DBFunction {
     public static int select(String statement){
 
 
-        // TODO MAKE SELECTION POSSIBLE
 
 
 
         return 0; // TODO RETURN AMOUNT OF RECORDS FOUND - CAN BE USEFUL FOR CHECKING STUFF BEFORE TAKING ACTIONS
 
+
+    }
+
+
+    /**
+     *
+     * Will retrieve an existing customer from the database, and assign all the attributes to a Customer object.
+     * Will search based on phone number and password. If no results are found it will just return a Customer object that is null.
+     * @param phoneNumber phone number of the customer
+     * @param password his/her password
+     * @return Customer object with all instance variables fulfilled
+     */
+
+    public static Customer getExistingCustomer(String phoneNumber, String password){
+
+        Customer customer = null;
+
+        try{
+
+
+            PreparedStatement ps = con.prepareCall("SELECT * FROM dbo.getCustomerInfo(?, ?)");
+
+            ps.setString(1,phoneNumber);
+            ps.setString(2,password);
+
+            ResultSet rs = ps.executeQuery();
+
+            // If anything was found it will assign the attributes to a Customer object
+            if (rs.next()){
+
+                customer = new Customer();
+
+                String name = rs.getString(1);
+                String driverLicenceNo = rs.getString(2);
+                // phoneNumber already saved (columnIndex 3)
+                String streetName = rs.getString(4);
+                int zipCode = rs.getInt(5);
+                int loyaltyGrade = rs.getInt(6);
+                // password is already saved (columnIndex 7)
+
+                // Will assign the values to the customer object and then return it at the end
+                customer.assignInfoToCustomerObject(name,driverLicenceNo,phoneNumber,streetName,zipCode,loyaltyGrade,password);
+
+
+
+            }
+
+
+        } catch (Exception e){
+
+
+            System.err.println(e.getMessage());
+        }
+
+
+        // If it's null the other method will take care of this
+        return customer;
 
     }
 
