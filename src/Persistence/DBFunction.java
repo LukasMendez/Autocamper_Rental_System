@@ -11,7 +11,7 @@ import java.sql.ResultSet;
  * Created by Lukas
  * 10-04-2019.
  */
-public class DBFunction {
+public abstract class DBFunction {
 
     // We are using static to make sure, that we are using the same connection all the time. And that we don't create
     // a new one for each instance.

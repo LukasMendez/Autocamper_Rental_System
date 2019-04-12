@@ -79,6 +79,7 @@ public class Controller {
     public void initialize(){
         tableView.setVisible(false);
         DB.establishConnection();
+        handleMakeReservation();
 
 
     }
@@ -308,7 +309,12 @@ public class Controller {
         passwordField.setVisible(true);
 
         // Clear password field if used previously
+        nameTextfield.setText("");
+       // phoneNoTextfield.setText("");
+        licenceTextfield.setText("");
+        streetTextfield.setText("");
         passwordField.setText("");
+        zipTextfield.setText("");
 
         confirmCustomerInfo.setVisible(true);
 
