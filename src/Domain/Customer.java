@@ -44,8 +44,6 @@ public class Customer {
 
     public boolean addCustomer(String name, String driverLicenceNo, String phoneNo, String streetName, int zipCode, String password)
     {
-
-
         // WILL TRY TO ADD THE INFORMATION TO THE DATABASE, BUT ONLY CREATE A CUSTOMER INSTANCE IF 1 ROW IS AFFECTED
         // THIS MEANS THAT THE INFORMATION WAS REGISTERED SUCCESSFULLY WITHOUT ANY ERRORS
 
@@ -63,7 +61,6 @@ public class Customer {
             return false;
         }
 
-
     }
 
     /**
@@ -78,7 +75,6 @@ public class Customer {
      */
     public void assignInfoToCustomerObject(String name, String driverLicenceNo, String phoneNo, String streetName, int zipCode, int loyaltyGrade, String password){
 
-
         this.name=name;
         this.driverLicenceNo=driverLicenceNo;
         this.phoneNo=phoneNo;
@@ -86,11 +82,6 @@ public class Customer {
         this.zipCode=zipCode;
         this.loyaltyGrade=loyaltyGrade;
         this.password=password;
-
-
-
-
-
 
     }
 

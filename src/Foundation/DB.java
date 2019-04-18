@@ -35,7 +35,8 @@ public class DB {
             password=props.getProperty("password");
 
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            con=DriverManager.getConnection("jdbc:sqlserver://localhost:"+port+";databaseName="+databaseName+"",userName,password);
+            con=DriverManager.getConnection("jdbc:sqlserver://localhost:"+port+";databaseName="+databaseName+"; username=" +
+                    userName + ";password= " + password);
             System.out.println("Database Ready");
 
         }catch(Exception e){
