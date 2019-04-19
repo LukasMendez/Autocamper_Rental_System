@@ -27,6 +27,9 @@ public class Controller {
     @FXML
     private Label infoLabel;
 
+    @FXML
+    private Label signInLabel;
+
 
     // BUTTONS
     @FXML
@@ -65,10 +68,6 @@ public class Controller {
     @FXML
     private HBox checkButtonHBox;
 
-    @FXML
-    private VBox mainVbox;
-    @FXML
-    private VBox otherVbox; // NOT SURE IF WE WILL EVER USE THIS
 
 
 
@@ -89,19 +88,20 @@ public class Controller {
     public void handleMakeReservation()
     {
 
+        signInLabel.setText("Not signed in");
         loginMode=false;
 
         passwordField.setVisible(false);
         confirmCustomerInfo.setVisible(false);
         infoLabel.setVisible(false);
-
-
-
-        headLabel.setText("Please enter your phone number");
         topHBox.setVisible(true);
         checkButtonHBox.setVisible(true);
         checkPhoneNoButton.setVisible(true);
         phoneNoTextfield.setVisible(true);
+
+
+        headLabel.setText("Please enter your phone number");
+
     }
 
 
@@ -182,6 +182,8 @@ public class Controller {
                     infoLabel.setTextFill(Color.GREEN);
                     infoLabel.setText("PASSWORD WAS CORRECT! DEBUGGING");
 
+                    signInLabel.setText("Welcome, " + currentCustomer.getName());
+
                     // TODO THE CUSTOMER IS NOW LOGGED IN AND WILL BE ABLE TO CHOOSE AN AUTOCAMPER
 
                 } else {
@@ -224,6 +226,7 @@ public class Controller {
     @FXML
     private void loginScreen(){
 
+        signInLabel.setText("Not signed in");
 
         checkButtonHBox.setVisible(false);
         middleHBox.setVisible(true);
@@ -291,6 +294,8 @@ public class Controller {
      */
 
     private void rebuildRegistrationPage(){
+
+        signInLabel.setText("Not signed in");
 
         checkButtonHBox.setVisible(false);
         middleHBox.setVisible(true);

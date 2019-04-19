@@ -1,11 +1,17 @@
 package Persistence;
 
+import Domain.Autocamper.Autocamper;
+import Domain.Autocamper.BasicCamper;
+import Domain.Autocamper.LuxuryCamper;
+import Domain.Autocamper.StandardCamper;
 import Domain.Customer;
 import Foundation.DB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by Lukas
@@ -175,6 +181,67 @@ public abstract class DBFunction {
         // If it's null the other method will take care of this
         return customer;
 
+    }
+
+    public static ArrayList<Autocamper> getAllAutocampers() throws SQLException
+    {
+        ArrayList<Autocamper> allAutocampers = new ArrayList<>();
+
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tblAutocamper");
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next())
+        {
+            String autocamperType = rs.getString(7);
+            if (autocamperType.contains("Basic"))
+            {
+                allAutocampers.add(new BasicCamper(rs.getString(1),rs.getInt(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getInt(6),"Basic","0"));
+
+            }
+            else if (autocamperType.contains("Luxury"))
+            {
+                allAutocampers.add(new LuxuryCamper(rs.getString(1),rs.getInt(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getInt(6),"Luxury","0"));
+            }
+            else
+            {
+                allAutocampers.add(new StandardCamper(rs.getString(1),rs.getInt(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getInt(6),"Standard","0"));
+            }
+        }
+
+        System.out.println(allAutocampers);
+        return allAutocampers;
+    }
+
+    public static ArrayList<Autocamper> getAvaliableCampers(ArrayList<Autocamper> autocampersAL, String weekFrom, String weekTo) throws SQLException
+    {
+        ArrayList<Autocamper> availableCampers = new ArrayList<>();
+
+        PreparedStatement ps = con.prepareStatement("SELECT dbo.checkForAvaliableCamper (?,?,?)");
+
+        for (Autocamper autocamper: autocampersAL)
+        {
+            ps.setString(1,weekFrom);
+            ps.setString(2,weekTo);
+            ps.setString(3, autocamper.getVINNumber());
+
+            ResultSet rs = ps.executeQuery();
+            int available = -1;
+
+            if (rs.next())
+            {
+                available = rs.getInt(1);
+                System.out.println(available);
+            }
+
+
+            if (available == 0)
+            {
+                availableCampers.add(autocamper);
+            }
+
+        }
+
+        return availableCampers;
     }
 
 

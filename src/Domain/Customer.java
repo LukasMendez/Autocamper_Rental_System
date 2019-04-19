@@ -8,6 +8,8 @@ import Persistence.DBFunction;
  */
 public class Customer {
 
+
+
     private String name;
     private String driverLicenceNo;
     private String phoneNo;
@@ -95,6 +97,9 @@ public class Customer {
     }
 
 
+    public String getName() {
+        return name;
+    }
 
 
 }
