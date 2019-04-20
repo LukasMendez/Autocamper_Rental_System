@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -19,9 +20,9 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controller">
     <left>
-        <VBox fx:id="mainVbox" prefHeight="606.0" prefWidth="172.0" spacing="10.0" style="-fx-background-color: #0B0B3B;" BorderPane.alignment="CENTER">
+        <VBox fx:id="mainVbox" prefHeight="606.0" prefWidth="172.0" spacing="10.0" style="-fx-background-color: #3c652c;" BorderPane.alignment="CENTER">
             <children>
-            <Button fx:id="homeButton" mnemonicParsing="false" prefHeight="22.0" prefWidth="184.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0;" text="Home">
+            <Button fx:id="homeButton" mnemonicParsing="false" onAction="#handleHome" prefHeight="22.0" prefWidth="184.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0;" text="Home">
                <font>
                   <Font name="Gill Sans MT" size="12.0" />
                </font>
@@ -30,7 +31,7 @@
                <font>
                   <Font name="Gill Sans MT" size="12.0" />
                </font></Button>
-                <Button mnemonicParsing="false" onAction="#loginScreen" prefHeight="22.0" prefWidth="184.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0;" text="Do something else">
+                <Button mnemonicParsing="false" onAction="#loginScreen" prefHeight="22.0" prefWidth="184.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0; -fx-border-radius: 12px;" text="Log in">
                <font>
                   <Font name="Gill Sans MT" size="12.0" />
                </font></Button>
@@ -46,14 +47,14 @@
         </VBox>
     </left>
    <center>
-      <Pane prefHeight="536.0" prefWidth="628.0" BorderPane.alignment="TOP_CENTER">
+      <Pane prefHeight="536.0" prefWidth="628.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="headLabel" alignment="CENTER" layoutX="143.0" layoutY="14.0" prefHeight="27.0" prefWidth="341.0" text="Welcome to Wagners Auto Camper Rental Service">
+            <Label fx:id="headLabel" alignment="CENTER" layoutX="145.0" layoutY="14.0" prefHeight="27.0" prefWidth="341.0" text="Welcome to Wagners Auto Camper Rental Service" textAlignment="CENTER">
                <font>
                   <Font name="Gill Sans MT Ext Condensed Bold" size="27.0" />
                </font>
             </Label>
-            <Label fx:id="infoLabel" layoutX="231.0" layoutY="58.0" text="The info was saved successfully">
+            <Label fx:id="infoLabel" layoutX="230.0" layoutY="63.0" text="The info was saved successfully" textAlignment="CENTER" visible="false">
                <font>
                   <Font name="Gill Sans MT" size="13.0" />
                </font>
@@ -84,14 +85,24 @@
                </font>
             </Button>
                   <TextField fx:id="nameTextfield" layoutX="21.0" layoutY="113.0" promptText="Name" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0; -fx-border-color: #1C1C1C;" visible="false" />
-                  <TextField fx:id="phoneNoTextfield" layoutX="221.0" layoutY="113.0" promptText="Phone Number" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0; -fx-border-color: #1C1C1C;" />
+                  <TextField fx:id="phoneNoTextfield" layoutX="221.0" layoutY="113.0" promptText="Phone Number" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0; -fx-border-color: #1C1C1C;" visible="false" />
                   <TextField fx:id="licenceTextfield" layoutX="417.0" layoutY="113.0" promptText="Licence Number" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0; -fx-border-color: #1C1C1C;" visible="false" />
                   <TextField fx:id="streetTextfield" layoutX="21.0" layoutY="159.0" promptText="Street Name" style="-fx-background-color: #FFFFFF; -fx-border-radius: 0; -fx-border-color: #1C1C1C;" visible="false" />
             <PasswordField fx:id="passwordField" layoutX="220.0" layoutY="159.0" promptText="Password" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0; -fx-border-color: #1C1C1C;" visible="false" />
                   <TextField fx:id="zipTextfield" layoutX="417.0" layoutY="159.0" promptText="Zip Code" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0; -fx-border-color: #1C1C1C;" visible="false" />
-                  <Button fx:id="checkPhoneNoButton" layoutX="283.0" layoutY="211.0" mnemonicParsing="false" onAction="#handleCheckPhoneNo" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0;" text="Check">
+                  <Button fx:id="checkPhoneNoButton" layoutX="282.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleCheckPhoneNo" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0; -fx-border-radius: 12px;" text="Check" visible="false">
                <font>
                   <Font name="Gill Sans MT" size="15.0" />
+               </font>
+            </Button>
+            <ImageView fx:id="frontImage" fitHeight="238.0" fitWidth="634.0" layoutX="-1.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Domain/Autocamper/Images/autocamperesø.jpg" />
+               </image>
+            </ImageView>
+            <Button fx:id="bigMakeReservationButton" layoutX="206.0" layoutY="413.0" mnemonicParsing="false" onAction="#handleMakeReservation" prefHeight="49.0" prefWidth="216.0" style="-fx-background-color: #dde4cb;" text="Make reservation" textFill="#4a6113">
+               <font>
+                  <Font name="Marlett" size="18.0" />
                </font>
             </Button>
          </children>

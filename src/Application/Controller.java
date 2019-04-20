@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -88,6 +89,8 @@ public class Controller {
     private Button searchWeeksButton;
     @FXML
     private Button confirmAutoChoiceButton;
+    @FXML
+    private Button bigMakeReservationButton;
 
     // TEXTFIELD OR PASSWORD FIELD
     @FXML
@@ -104,6 +107,8 @@ public class Controller {
     @FXML
     private PasswordField passwordField;
 
+    @FXML
+    private ImageView frontImage;
 
     //VBOX
     @FXML
@@ -117,7 +122,7 @@ public class Controller {
     public void initialize()
     {
         DB.establishConnection();
-        handleMakeReservation();
+        handleHome();
     }
 
 
@@ -260,7 +265,7 @@ public class Controller {
     @FXML
     private void handleSearch() throws SQLException
     {
-        setTableView(DBFunction.getAvaliableCampers(DBFunction.getAllAutocampers(), (String) weekfromChoice.getValue(),(String) weektoChoice.getValue()));
+        setTableView(DBFunction.getAvaliableCampers(DBFunction.getAllAutocampers(), weekfromChoice.getValue(), (String) weektoChoice.getValue()));
         confirmAutoChoiceButton.setVisible(true);
     }
 
@@ -328,7 +333,6 @@ public class Controller {
 
             loginMode = false;
             rebuildRegistrationPage();
-
         }
     }
 
@@ -362,18 +366,6 @@ public class Controller {
 
         //Will change the login text back to confirm
         confirmCustomerInfo.setText("Confirm");
-
-    }
-
-
-    @FXML
-    public void handleHomeButton() {
-
-        clearSceen();
-
-        headLabel.setText("Welcome to Wagners Auto Camper Rental Service");
-
-
     }
 
 
@@ -381,10 +373,7 @@ public class Controller {
      * The method gets an arraylist of all the autocampers, that need to be displayed in the tableview and displays them
      * @param avaliableAutocampers
      */
-
-
     public void setTableView(ArrayList<Autocamper> avaliableAutocampers) {
-
 
         tableView.setVisible(true);
         autocamperCol.setVisible(true);
@@ -416,12 +405,21 @@ public class Controller {
         descriptionCol.setCellValueFactory(new PropertyValueFactory<Autocamper, String>("description"));
 
         tableView.setItems(data);
-
     }
 
+    @FXML
+    public void handleHome()
+    {
+        clearSceen();
+
+        headLabel.setText("Welcome to Wagners Auto Camper Rental Service");
+        frontImage.setVisible(true);
+        bigMakeReservationButton.setVisible(true);
+    }
+
+    @SuppressWarnings("Duplicates")
     public void clearSceen()
     {
-
         tableView.setVisible(false);
 
         infoLabel.setVisible(false);
@@ -434,6 +432,7 @@ public class Controller {
         confirmCustomerInfo.setVisible(false);
         checkPhoneNoButton.setVisible(false);
         searchWeeksButton.setVisible(false);
+        bigMakeReservationButton.setVisible(false);
 
         nameTextfield.setVisible(false);
         licenceTextfield.setVisible(false);
@@ -442,6 +441,7 @@ public class Controller {
         zipTextfield.setVisible(false);
         passwordField.setVisible(false);
 
+        frontImage.setVisible(false);
     }
 
 }
