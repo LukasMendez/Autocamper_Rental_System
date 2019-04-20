@@ -444,6 +444,7 @@ public class Controller {
             }
         }
 
+
         autocamperCol.setCellValueFactory(new PropertyValueFactory<Autocamper, String>("type"));
         priceCol.setCellValueFactory(new PropertyValueFactory<Autocamper, String>("price"));
         modelCol.setCellValueFactory(new PropertyValueFactory<Autocamper, Integer>("ModelYear"));
