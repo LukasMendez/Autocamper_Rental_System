@@ -443,8 +443,6 @@ public class Controller {
                 data.addAll(new StandardCamper(avaliableAutocampers.get(i).getVINNumber(), ((StandardCamper) avaliableAutocampers.get(i)).getModelYear(), ((StandardCamper) avaliableAutocampers.get(i)).getHeatingSystem(), ((StandardCamper) avaliableAutocampers.get(i)).getSize(), ((StandardCamper) avaliableAutocampers.get(i)).getDescription(), ((StandardCamper) avaliableAutocampers.get(i)).getNumberOfBeds(),"Standard", ((StandardCamper) avaliableAutocampers.get(i)).getPrice()));
             }
         }
-
-
         autocamperCol.setCellValueFactory(new PropertyValueFactory<Autocamper, String>("type"));
         priceCol.setCellValueFactory(new PropertyValueFactory<Autocamper, String>("price"));
         modelCol.setCellValueFactory(new PropertyValueFactory<Autocamper, Integer>("ModelYear"));
