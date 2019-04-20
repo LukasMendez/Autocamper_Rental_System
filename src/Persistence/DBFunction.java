@@ -147,6 +147,7 @@ public abstract class DBFunction {
 
             ResultSet rs = ps.executeQuery();
 
+            
             // If anything was found it will assign the attributes to a Customer object
             if (rs.next()){
 
