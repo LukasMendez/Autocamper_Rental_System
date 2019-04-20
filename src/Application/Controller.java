@@ -100,38 +100,24 @@ public class Controller {
     private TextField streetTextfield;
     @FXML
     private TextField zipTextfield;
-    @FXML
-    private TextField passwordTextfield;
 
     @FXML
     private PasswordField passwordField;
 
-    // HBOX & VBOX
-    @FXML
-    private HBox topHBox;
-    @FXML
-    private HBox middleHBox;
-    @FXML
-    private HBox bottomHBox;
-    @FXML
-    private HBox checkButtonHBox;
 
+    //VBOX
     @FXML
     private VBox mainVbox;
-    @FXML
-    private VBox otherVbox; // NOT SURE IF WE WILL EVER USE THIS
 
 
     // When you press the "Confirm" button. The output will depend on this boolean
     private boolean loginMode = false;
 
     @FXML
-    public void initialize() {
-        tableView.setVisible(false);
+    public void initialize()
+    {
         DB.establishConnection();
         handleMakeReservation();
-
-
     }
 
 
@@ -140,14 +126,9 @@ public class Controller {
 
         loginMode = false;
 
-        passwordField.setVisible(false);
-        confirmCustomerInfo.setVisible(false);
-        infoLabel.setVisible(false);
-
+        clearSceen();
 
         headLabel.setText("Please enter your phone number");
-        topHBox.setVisible(true);
-        checkButtonHBox.setVisible(true);
         checkPhoneNoButton.setVisible(true);
         phoneNoTextfield.setVisible(true);
     }
@@ -173,7 +154,6 @@ public class Controller {
     @FXML
     public void handleCustomerInfo() throws SQLException {
         Customer currentCustomer = new Customer();
-
 
         if (!loginMode) {
 
@@ -217,7 +197,6 @@ public class Controller {
 
             if (!phoneNoTextfield.equals("") && !passwordField.equals("")) {
 
-
                 currentCustomer = DBFunction.getExistingCustomer(phoneNoTextfield.getText(), passwordField.getText());
 
                 if (currentCustomer != null) {
@@ -229,10 +208,9 @@ public class Controller {
 
                 } else {
 
-                    infoLabel.setText("Your password or phone number is incorrect. Please check again!");
+                    infoLabel.setText("Your password or phone number is incorrect. Please try again!");
                     infoLabel.setTextFill(Color.RED);
                     infoLabel.setVisible(true);
-
                 }
 
 
@@ -241,7 +219,6 @@ public class Controller {
                 infoLabel.setText("Please fill all the fields");
                 infoLabel.setTextFill(Color.RED);
                 infoLabel.setVisible(true);
-
             }
 
 
@@ -259,23 +236,19 @@ public class Controller {
         //Sets all the autocampers in the tableview
         setTableView(DBFunction.getAllAutocampers());
 
-
-        phoneNoTextfield.setVisible(false);
-        passwordField.setVisible(false);
-        confirmCustomerInfo.setVisible(false);
-        infoLabel.setVisible(false);
-        headLabel.setText("Reservation");
+        clearSceen();
 
         //Declaring the choices in the choiceboxes
-        weekfromChoice.setItems(FXCollections.observableArrayList("01","02","03","04","05"));
-        weektoChoice.setItems(FXCollections.observableArrayList("01","02","03","04","05"));
+        weekfromChoice.setItems(FXCollections.observableArrayList("01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"));
+        weektoChoice.setItems(FXCollections.observableArrayList("01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"));
 
+        headLabel.setText("Reservation");
+        tableView.setVisible(true);
         weekfromLabel.setVisible(true);
         weektoLabel.setVisible(true);
         weekfromChoice.setVisible(true);
         weektoChoice.setVisible(true);
         searchWeeksButton.setVisible(true);
-        confirmAutoChoiceButton.setVisible(true);
 
     }
 
@@ -288,6 +261,7 @@ public class Controller {
     private void handleSearch() throws SQLException
     {
         setTableView(DBFunction.getAvaliableCampers(DBFunction.getAllAutocampers(), (String) weekfromChoice.getValue(),(String) weektoChoice.getValue()));
+        confirmAutoChoiceButton.setVisible(true);
     }
 
     /**
@@ -308,14 +282,9 @@ public class Controller {
     @FXML
     private void loginScreen() {
 
-
-        checkButtonHBox.setVisible(false);
-        middleHBox.setVisible(true);
-        bottomHBox.setVisible(true);
+        clearSceen();
 
         // Will make sure that only phone number text field is displayed
-        nameTextfield.setVisible(false);
-        streetTextfield.setVisible(false);
         phoneNoTextfield.setVisible(true);
         passwordField.setVisible(true);
         confirmCustomerInfo.setVisible(true);
@@ -323,7 +292,6 @@ public class Controller {
 
         // Will make sure that zip code text field and street text field are removed, so that the password field is
         // the only visible node in the middleHBox and also aligned perfectly with the phone number text field
-        middleHBox.getChildren().removeAll(zipTextfield, streetTextfield);
 
         infoLabel.setVisible(true);
         infoLabel.setTextFill(Color.BLACK);
@@ -342,6 +310,7 @@ public class Controller {
 
     @FXML
     public void handleCheckPhoneNo() {
+
         Customer currentCustomer = new Customer();
 
         if (currentCustomer.checkPhoneNo(phoneNoTextfield.getText())) {
@@ -369,17 +338,13 @@ public class Controller {
 
     private void rebuildRegistrationPage() {
 
-        checkButtonHBox.setVisible(false);
-        middleHBox.setVisible(true);
-        bottomHBox.setVisible(true);
+        clearSceen();
 
+        phoneNoTextfield.setVisible(true);
         nameTextfield.setVisible(true);
         licenceTextfield.setVisible(true);
 
         // Will make sure the nodes back in its old order
-        middleHBox.getChildren().removeAll(streetTextfield, zipTextfield, passwordField);
-
-        middleHBox.getChildren().addAll(streetTextfield, zipTextfield, passwordField);
 
         streetTextfield.setVisible(true);
         zipTextfield.setVisible(true);
@@ -404,12 +369,8 @@ public class Controller {
     @FXML
     public void handleHomeButton() {
 
-        checkButtonHBox.setVisible(false);
-        middleHBox.setVisible(false);
-        bottomHBox.setVisible(false);
-        nameTextfield.setVisible(false);
-        licenceTextfield.setVisible(false);
-        phoneNoTextfield.setVisible(false);
+        clearSceen();
+
         headLabel.setText("Welcome to Wagners Auto Camper Rental Service");
 
 
@@ -423,6 +384,8 @@ public class Controller {
 
 
     public void setTableView(ArrayList<Autocamper> avaliableAutocampers) {
+
+
         tableView.setVisible(true);
         autocamperCol.setVisible(true);
 
@@ -443,6 +406,7 @@ public class Controller {
                 data.addAll(new StandardCamper(avaliableAutocampers.get(i).getVINNumber(), ((StandardCamper) avaliableAutocampers.get(i)).getModelYear(), ((StandardCamper) avaliableAutocampers.get(i)).getHeatingSystem(), ((StandardCamper) avaliableAutocampers.get(i)).getSize(), ((StandardCamper) avaliableAutocampers.get(i)).getDescription(), ((StandardCamper) avaliableAutocampers.get(i)).getNumberOfBeds(),"Standard", ((StandardCamper) avaliableAutocampers.get(i)).getPrice()));
             }
         }
+
         autocamperCol.setCellValueFactory(new PropertyValueFactory<Autocamper, String>("type"));
         priceCol.setCellValueFactory(new PropertyValueFactory<Autocamper, String>("price"));
         modelCol.setCellValueFactory(new PropertyValueFactory<Autocamper, Integer>("ModelYear"));
@@ -455,5 +419,29 @@ public class Controller {
 
     }
 
+    public void clearSceen()
+    {
+
+        tableView.setVisible(false);
+
+        infoLabel.setVisible(false);
+        weekfromLabel.setVisible(false);
+        weektoLabel.setVisible(false);
+        weektoChoice.setVisible(false);
+        weekfromChoice.setVisible(false);
+
+        confirmAutoChoiceButton.setVisible(false);
+        confirmCustomerInfo.setVisible(false);
+        checkPhoneNoButton.setVisible(false);
+        searchWeeksButton.setVisible(false);
+
+        nameTextfield.setVisible(false);
+        licenceTextfield.setVisible(false);
+        phoneNoTextfield.setVisible(false);
+        streetTextfield.setVisible(false);
+        zipTextfield.setVisible(false);
+        passwordField.setVisible(false);
+
+    }
 
 }

@@ -19,7 +19,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controller">
     <left>
-        <VBox prefHeight="400.0" prefWidth="172.0" spacing="10.0" style="-fx-background-color: #0B0B3B;" BorderPane.alignment="CENTER">
+        <VBox fx:id="mainVbox" prefHeight="606.0" prefWidth="172.0" spacing="10.0" style="-fx-background-color: #0B0B3B;" BorderPane.alignment="CENTER">
             <children>
             <Button fx:id="homeButton" mnemonicParsing="false" prefHeight="22.0" prefWidth="184.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0;" text="Home">
                <font>
@@ -34,56 +34,34 @@
                <font>
                   <Font name="Gill Sans MT" size="12.0" />
                </font></Button>
+            <Label fx:id="signInLabel" alignment="CENTER" prefHeight="17.0" prefWidth="177.0" text="Not signed in" textFill="WHITE">
+               <font>
+                  <Font name="Gill Sans MT Condensed" size="17.0" />
+               </font>
+            </Label>
             </children>
          <padding>
             <Insets top="10.0" />
          </padding>
         </VBox>
     </left>
-    <center>
-        <VBox fx:id="mainVbox" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #CEECF5;" BorderPane.alignment="CENTER">
-            <children>
-            <Label fx:id="headLabel" alignment="CENTER" prefHeight="27.0" prefWidth="341.0" text="Welcome to Wagners Auto Camper Rental Service">
+   <center>
+      <Pane prefHeight="536.0" prefWidth="628.0" BorderPane.alignment="TOP_CENTER">
+         <children>
+            <Label fx:id="headLabel" alignment="CENTER" layoutX="143.0" layoutY="14.0" prefHeight="27.0" prefWidth="341.0" text="Welcome to Wagners Auto Camper Rental Service">
                <font>
                   <Font name="Gill Sans MT Ext Condensed Bold" size="27.0" />
                </font>
             </Label>
-            <Label fx:id="infoLabel" text="The info was saved successfully" visible="false">
+            <Label fx:id="infoLabel" layoutX="231.0" layoutY="58.0" text="The info was saved successfully">
                <font>
                   <Font name="Gill Sans MT" size="13.0" />
                </font>
             </Label>
-                <HBox fx:id="topHBox" alignment="TOP_CENTER" prefHeight="63.0" prefWidth="628.0" spacing="20.0" visible="false">
-                    <children>
-                        <TextField fx:id="nameTextfield" promptText="Name" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0; -fx-border-color: #1C1C1C;" visible="false" />
-                        <TextField fx:id="phoneNoTextfield" promptText="Phone Number" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0; -fx-border-color: #1C1C1C;" />
-                        <TextField fx:id="licenceTextfield" promptText="Licence Number" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0; -fx-border-color: #1C1C1C;" visible="false" />
-                    </children>
-                    <padding>
-                        <Insets top="20.0" />
-                    </padding>
-                </HBox>
-            <Label fx:id="weekfromLabel" text="Week from" visible="false" />
-            <ChoiceBox fx:id="weekfromChoice" prefWidth="150.0" visible="false" />
-                <HBox fx:id="middleHBox" alignment="TOP_CENTER" prefHeight="50.0" prefWidth="628.0" spacing="20.0" visible="false">
-                    <children>
-                        <TextField fx:id="streetTextfield" promptText="Street Name" style="-fx-background-color: #FFFFFF; -fx-border-radius: 0; -fx-border-color: #1C1C1C;" />
-                        <TextField fx:id="zipTextfield" promptText="Zip Code" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0; -fx-border-color: #1C1C1C;" />
-                  <PasswordField fx:id="passwordField" promptText="Password" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0; -fx-border-color: #1C1C1C;" />
-                    </children>
-                </HBox>
-            <Label fx:id="weektoLabel" text="Week to" visible="false" />
-            <ChoiceBox fx:id="weektoChoice" prefWidth="150.0" visible="false" />
-                <HBox fx:id="bottomHBox" alignment="CENTER" prefHeight="52.0" prefWidth="628.0" visible="false">
-                    <children>
-                        <Button fx:id="confirmCustomerInfo" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleCustomerInfo" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0;" text="Confirm">
-                     <font>
-                        <Font name="Gill Sans MT" size="15.0" />
-                     </font></Button>
-                    </children>
-                </HBox>
-            <Button fx:id="searchWeeksButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleSearch" text="Search" visible="false" />
-                <TableView fx:id="tableView" prefHeight="225.0" prefWidth="628.0" visible="false">
+            <Label fx:id="weektoLabel" layoutX="457.0" layoutY="119.0" text="Week to" visible="false" />
+            <ChoiceBox fx:id="weektoChoice" layoutX="410.0" layoutY="144.0" prefWidth="150.0" visible="false" />
+            <Button fx:id="searchWeeksButton" alignment="CENTER" contentDisplay="CENTER" layoutX="283.0" layoutY="224.0" mnemonicParsing="false" onAction="#handleSearch" text="Search" visible="false" />
+                <TableView fx:id="tableView" layoutX="1.0" layoutY="300.0" prefHeight="225.0" prefWidth="628.0" visible="false">
                     <columns>
                         <TableColumn fx:id="autocamperCol" prefWidth="103.0" text="Autocamper" />
                         <TableColumn fx:id="priceCol" prefWidth="104.0" text="Price category" />
@@ -97,25 +75,26 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                     </columnResizePolicy>
                 </TableView>
-                <HBox fx:id="checkButtonHBox" alignment="CENTER" prefHeight="67.0" prefWidth="628.0" visible="false">
-                    <children>
-                        <Button fx:id="checkPhoneNoButton" mnemonicParsing="false" onAction="#handleCheckPhoneNo" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0;" text="Check">
-                     <font>
-                        <Font name="Gill Sans MT" size="15.0" />
-                     </font></Button>
-                    </children>
-                </HBox>
-            <Button fx:id="confirmAutoChoiceButton" mnemonicParsing="false" onAction="#handleChoice" text="Confirm" visible="false" />
-            </children>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-         <padding>
-            <Insets top="9.0" />
-         </padding>
-        </VBox>
-    </center>
-   <right>
-      <VBox fx:id="otherVbox" prefHeight="200.0" prefWidth="0.0" style="-fx-background-color: RED;" BorderPane.alignment="CENTER" />
-   </right>
+            <Button fx:id="confirmAutoChoiceButton" layoutX="277.0" layoutY="544.0" mnemonicParsing="false" onAction="#handleChoice" text="Confirm" visible="false" />
+            <Label fx:id="weekfromLabel" layoutX="108.0" layoutY="119.0" text="Week from" visible="false" />
+            <ChoiceBox fx:id="weekfromChoice" layoutX="69.0" layoutY="144.0" prefWidth="150.0" visible="false" />
+                  <Button fx:id="confirmCustomerInfo" alignment="CENTER" contentDisplay="CENTER" layoutX="278.0" layoutY="225.0" mnemonicParsing="false" onAction="#handleCustomerInfo" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0;" text="Confirm" visible="false">
+               <font>
+                  <Font name="Gill Sans MT" size="15.0" />
+               </font>
+            </Button>
+                  <TextField fx:id="nameTextfield" layoutX="21.0" layoutY="113.0" promptText="Name" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0; -fx-border-color: #1C1C1C;" visible="false" />
+                  <TextField fx:id="phoneNoTextfield" layoutX="221.0" layoutY="113.0" promptText="Phone Number" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0; -fx-border-color: #1C1C1C;" />
+                  <TextField fx:id="licenceTextfield" layoutX="417.0" layoutY="113.0" promptText="Licence Number" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0; -fx-border-color: #1C1C1C;" visible="false" />
+                  <TextField fx:id="streetTextfield" layoutX="21.0" layoutY="159.0" promptText="Street Name" style="-fx-background-color: #FFFFFF; -fx-border-radius: 0; -fx-border-color: #1C1C1C;" visible="false" />
+            <PasswordField fx:id="passwordField" layoutX="220.0" layoutY="159.0" promptText="Password" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0; -fx-border-color: #1C1C1C;" visible="false" />
+                  <TextField fx:id="zipTextfield" layoutX="417.0" layoutY="159.0" promptText="Zip Code" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0; -fx-border-color: #1C1C1C;" visible="false" />
+                  <Button fx:id="checkPhoneNoButton" layoutX="283.0" layoutY="211.0" mnemonicParsing="false" onAction="#handleCheckPhoneNo" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0;" text="Check">
+               <font>
+                  <Font name="Gill Sans MT" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </center>
 </BorderPane>
