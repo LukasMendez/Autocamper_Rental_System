@@ -4,7 +4,7 @@ package Domain.Autocamper;
  * Created by Lukas
  * 08-04-2019.
  */
-public class BasicCamper extends Autocamper {
+public class BasicCamper extends Autocamper{
 
     public int getModelYear() {
         return modelYear;

@@ -24,10 +24,6 @@ public abstract class DBFunction {
     static Connection con = DB.getCon();
 
 
-
-
-
-
     /**
      * Checks the phone number in the database
      * @param phoneNo the given phone number
@@ -147,7 +143,6 @@ public abstract class DBFunction {
 
             ResultSet rs = ps.executeQuery();
 
-            
             // If anything was found it will assign the attributes to a Customer object
             if (rs.next()){
 

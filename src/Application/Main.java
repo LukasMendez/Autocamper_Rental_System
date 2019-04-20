@@ -1,5 +1,6 @@
 package Application;
 
+import Persistence.DBFunction;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,7 +19,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.getIcons().add(new Image("Domain/Autocamper/Images/camper-pngrepo-com.png"));
         primaryStage.setTitle("Auto Camper Rental System");
-        primaryStage.setScene(new Scene(root, 800, 500));
+        primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
 
 
