@@ -105,6 +105,44 @@
                   <Font name="Marlett" size="18.0" />
                </font>
             </Button>
+            <Label fx:id="insuranceLabel" layoutX="64.0" layoutY="114.0" text="Insurance" visible="false">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <Label fx:id="autocamperLabel" layoutX="88.0" layoutY="330.0" text="Autocamper:" visible="false">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="weekFromFinalLabel" layoutX="102.0" layoutY="368.0" text="Week from:" visible="false">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="weekToFinalLabel" layoutX="121.0" layoutY="408.0" text="Week to:" visible="false">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="insuranceFinalLabel" layoutX="115.0" layoutY="447.0" text="Insurance:" visible="false">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalPriceLabel" layoutX="111.0" layoutY="485.0" text="Total price:" visible="false">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="autocamperTextField" editable="false" layoutX="254.0" layoutY="330.0" visible="false" />
+            <TextField fx:id="weekFromTextField" editable="false" layoutX="254.0" layoutY="368.0" visible="false" />
+            <TextField fx:id="weekToTextField" editable="false" layoutX="254.0" layoutY="408.0" visible="false" />
+            <TextField fx:id="insuranceTextfield" editable="false" layoutX="254.0" layoutY="447.0" visible="false" />
+            <TextField fx:id="totalPriceTextField" editable="false" layoutX="254.0" layoutY="484.0" visible="false" />
+            <Button fx:id="confirmReservationButton" layoutX="454.0" layoutY="544.0" mnemonicParsing="false" onAction="#handleConfirmReservation" style="fx-background-color: FFFFFF; -fx-background-radius: 0;" text="Confirm reservation" visible="false" />
+            <RadioButton fx:id="basicRadiobutton" layoutX="66.0" layoutY="175.0" mnemonicParsing="false" onAction="#handleBasicInsurance" text="Basic" visible="false" />
+            <RadioButton fx:id="superRadiobutton" layoutX="66.0" layoutY="224.0" mnemonicParsing="false" onAction="#handleSuperInsurance" text="Super Cover Plus" visible="false" />
          </children>
       </Pane>
    </center>

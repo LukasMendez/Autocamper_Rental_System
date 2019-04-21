@@ -67,42 +67,37 @@ public class Controller {
     @FXML
     private Label weektoLabel;
 
+    @FXML
+    private Label insuranceLabel;
+
+    @FXML
+    private Label autocamperLabel;
+
+    @FXML
+    private Label weekFromFinalLabel;
+
+    @FXML
+    private Label weekToFinalLabel;
+
+    @FXML
+    private Label insuranceFinalLabel;
+
+    @FXML
+    private Label totalPriceLabel;
+
 
     //ChoiceBoxes
     @FXML
-    private ChoiceBox<String> weekfromChoice;
-
-    @FXML
-    private ChoiceBox weektoChoice;
+    private ChoiceBox<String> weekfromChoice, weektoChoice;
 
 
     // BUTTONS
     @FXML
-    private Button makeReservationButton;
-    @FXML
-    private Button confirmCustomerInfo;
-    @FXML
-    private Button checkPhoneNoButton;
-    @FXML
-    private Button homeButton;
-    @FXML
-    private Button searchWeeksButton;
-    @FXML
-    private Button confirmAutoChoiceButton;
-    @FXML
-    private Button bigMakeReservationButton;
+    private Button makeReservationButton, confirmCustomerInfo, checkPhoneNoButton, homeButton, searchWeeksButton, confirmAutoChoiceButton, bigMakeReservationButton, confirmReservationButton;
 
     // TEXTFIELD OR PASSWORD FIELD
     @FXML
-    private TextField nameTextfield;
-    @FXML
-    private TextField licenceTextfield;
-    @FXML
-    private TextField phoneNoTextfield;
-    @FXML
-    private TextField streetTextfield;
-    @FXML
-    private TextField zipTextfield;
+    private TextField nameTextfield, licenceTextfield, phoneNoTextfield, streetTextfield, zipTextfield, autocamperTextField, weekFromTextField, weekToTextField, insuranceTextfield, totalPriceTextField;
 
     @FXML
     private PasswordField passwordField;
@@ -114,13 +109,16 @@ public class Controller {
     @FXML
     private VBox mainVbox;
 
+    @FXML
+    private RadioButton basicRadiobutton, superRadiobutton;
+
+    private final ToggleGroup group = new ToggleGroup();
 
     // When you press the "Confirm" button. The output will depend on this boolean
     private boolean loginMode = false;
 
     @FXML
-    public void initialize()
-    {
+    public void initialize() {
         DB.establishConnection();
         handleHome();
     }
@@ -168,8 +166,8 @@ public class Controller {
                 boolean addedCustomerSuccess = currentCustomer.addCustomer(nameTextfield.getText(), licenceTextfield.getText(), phoneNoTextfield.getText(), streetTextfield.getText(), Integer.parseInt(zipTextfield.getText()), passwordField.getText());
 
                 // If none of the given information was rejected it will save and inform the customer that everything went well
-                if (addedCustomerSuccess) {
-
+                if (addedCustomerSuccess)
+                {
                     System.out.println("Saved data successfully");
 
                     infoLabel.setText("The info was saved successfully");
@@ -234,18 +232,18 @@ public class Controller {
 
     /**
      * Sets the reservation "scene"
+     *
      * @throws SQLException
      */
-    private void setReservationScreen() throws SQLException
-    {
+    private void setReservationScreen() throws SQLException {
         //Sets all the autocampers in the tableview
         setTableView(DBFunction.getAllAutocampers());
 
         clearSceen();
 
         //Declaring the choices in the choiceboxes
-        weekfromChoice.setItems(FXCollections.observableArrayList("01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"));
-        weektoChoice.setItems(FXCollections.observableArrayList("01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"));
+        weekfromChoice.setItems(FXCollections.observableArrayList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"));
+        weektoChoice.setItems(FXCollections.observableArrayList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"));
 
         headLabel.setText("Reservation");
         tableView.setVisible(true);
@@ -260,22 +258,54 @@ public class Controller {
 
     /**
      * Changes the tableview from showing all autocampers to only showing all the avaliable autocamper in the selected week(s)
+     *
      * @throws SQLException
      */
     @FXML
-    private void handleSearch() throws SQLException
-    {
+    private void handleSearch() throws SQLException {
         setTableView(DBFunction.getAvaliableCampers(DBFunction.getAllAutocampers(), weekfromChoice.getValue(), (String) weektoChoice.getValue()));
         confirmAutoChoiceButton.setVisible(true);
     }
+
 
     /**
      * Gets the selected autocamper
      */
     @FXML
-    private void handleChoice()
-    {
+    private void handleChoice() {
         Autocamper selectedAutocamper = tableView.getSelectionModel().getSelectedItem();
+
+        clearSceen();
+
+        insuranceLabel.setVisible(true);
+
+        basicRadiobutton.setVisible(true);
+        superRadiobutton.setVisible(true);
+
+        basicRadiobutton.setToggleGroup(group);
+        basicRadiobutton.setSelected(true);
+        superRadiobutton.setToggleGroup(group);
+
+        autocamperLabel.setVisible(true);
+        weekFromFinalLabel.setVisible(true);
+        weekToFinalLabel.setVisible(true);
+        insuranceFinalLabel.setVisible(true);
+        totalPriceLabel.setVisible(true);
+
+        autocamperTextField.setVisible(true);
+        autocamperTextField.setText(selectedAutocamper.getVINNumber());
+        weekFromTextField.setVisible(true);
+        weekFromTextField.setText(weekfromChoice.getValue());
+        weekToTextField.setVisible(true);
+        weekToTextField.setText(weektoChoice.getValue());
+        insuranceTextfield.setVisible(true);
+        insuranceTextfield.setText("Basic");
+
+        totalPriceTextField.setVisible(true);
+        totalPriceTextField.setText("7000");
+
+        confirmReservationButton.setVisible(true);
+
 
         //TODO Maybe change the scene and register the reservation
     }
@@ -304,7 +334,6 @@ public class Controller {
 
         // Will change the button text
         confirmCustomerInfo.setText("Log in");
-
     }
 
 
@@ -314,8 +343,8 @@ public class Controller {
      */
 
     @FXML
-    public void handleCheckPhoneNo() {
-
+    public void handleCheckPhoneNo()
+    {
         Customer currentCustomer = new Customer();
 
         if (currentCustomer.checkPhoneNo(phoneNoTextfield.getText())) {
@@ -371,6 +400,7 @@ public class Controller {
 
     /**
      * The method gets an arraylist of all the autocampers, that need to be displayed in the tableview and displays them
+     *
      * @param avaliableAutocampers
      */
     public void setTableView(ArrayList<Autocamper> avaliableAutocampers) {
@@ -380,19 +410,13 @@ public class Controller {
 
         final ObservableList<Autocamper> data = FXCollections.observableArrayList();
 
-        for (int i = 0; i < avaliableAutocampers.size(); i++)
-        {
-            if (avaliableAutocampers.get(i) instanceof BasicCamper)
-            {
-                data.addAll(new BasicCamper(avaliableAutocampers.get(i).getVINNumber(), (avaliableAutocampers.get(i)).getModelYear(), (avaliableAutocampers.get(i)).getHeatingSystem(), (avaliableAutocampers.get(i)).getSize(), (avaliableAutocampers.get(i)).getDescription(), (avaliableAutocampers.get(i)).getNumberOfBeds(),"Basic",((BasicCamper) avaliableAutocampers.get(i)).getPrice()));
-            }
-            else if (avaliableAutocampers.get(i) instanceof LuxuryCamper)
-            {
-                data.addAll(new LuxuryCamper(avaliableAutocampers.get(i).getVINNumber(), ((LuxuryCamper) avaliableAutocampers.get(i)).getModelYear(), ((LuxuryCamper) avaliableAutocampers.get(i)).getHeatingSystem(), ((LuxuryCamper) avaliableAutocampers.get(i)).getSize(), ((LuxuryCamper) avaliableAutocampers.get(i)).getDescription(), ((LuxuryCamper) avaliableAutocampers.get(i)).getNumberOfBeds(),"Luxury",((LuxuryCamper) avaliableAutocampers.get(i)).getPrice()));
-            }
-            else
-                {
-                data.addAll(new StandardCamper(avaliableAutocampers.get(i).getVINNumber(), ((StandardCamper) avaliableAutocampers.get(i)).getModelYear(), ((StandardCamper) avaliableAutocampers.get(i)).getHeatingSystem(), ((StandardCamper) avaliableAutocampers.get(i)).getSize(), ((StandardCamper) avaliableAutocampers.get(i)).getDescription(), ((StandardCamper) avaliableAutocampers.get(i)).getNumberOfBeds(),"Standard", ((StandardCamper) avaliableAutocampers.get(i)).getPrice()));
+        for (int i = 0; i < avaliableAutocampers.size(); i++) {
+            if (avaliableAutocampers.get(i) instanceof BasicCamper) {
+                data.addAll(new BasicCamper(avaliableAutocampers.get(i).getVINNumber(), (avaliableAutocampers.get(i)).getModelYear(), (avaliableAutocampers.get(i)).getHeatingSystem(), (avaliableAutocampers.get(i)).getSize(), (avaliableAutocampers.get(i)).getDescription(), (avaliableAutocampers.get(i)).getNumberOfBeds(), "Basic", ((BasicCamper) avaliableAutocampers.get(i)).getPrice()));
+            } else if (avaliableAutocampers.get(i) instanceof LuxuryCamper) {
+                data.addAll(new LuxuryCamper(avaliableAutocampers.get(i).getVINNumber(), ((LuxuryCamper) avaliableAutocampers.get(i)).getModelYear(), ((LuxuryCamper) avaliableAutocampers.get(i)).getHeatingSystem(), ((LuxuryCamper) avaliableAutocampers.get(i)).getSize(), ((LuxuryCamper) avaliableAutocampers.get(i)).getDescription(), ((LuxuryCamper) avaliableAutocampers.get(i)).getNumberOfBeds(), "Luxury", ((LuxuryCamper) avaliableAutocampers.get(i)).getPrice()));
+            } else {
+                data.addAll(new StandardCamper(avaliableAutocampers.get(i).getVINNumber(), ((StandardCamper) avaliableAutocampers.get(i)).getModelYear(), ((StandardCamper) avaliableAutocampers.get(i)).getHeatingSystem(), ((StandardCamper) avaliableAutocampers.get(i)).getSize(), ((StandardCamper) avaliableAutocampers.get(i)).getDescription(), ((StandardCamper) avaliableAutocampers.get(i)).getNumberOfBeds(), "Standard", ((StandardCamper) avaliableAutocampers.get(i)).getPrice()));
             }
         }
 
@@ -408,8 +432,7 @@ public class Controller {
     }
 
     @FXML
-    public void handleHome()
-    {
+    public void handleHome() {
         clearSceen();
 
         headLabel.setText("Welcome to Wagners Auto Camper Rental Service");
@@ -417,9 +440,35 @@ public class Controller {
         bigMakeReservationButton.setVisible(true);
     }
 
-    @SuppressWarnings("Duplicates")
-    public void clearSceen()
+    @FXML
+    public void handleConfirmReservation() throws SQLException
     {
+        clearSceen();
+
+        if (DBFunction.registerReservation(autocamperTextField.getText(),phoneNoTextfield.getText(), "low") == 1)
+        {
+            headLabel.setText("Reservation confirmed");
+        }
+        else
+        {
+            headLabel.setText("Reservation failed");
+        }
+    }
+
+    @FXML
+    public void handleSuperInsurance()
+    {
+        insuranceTextfield.setText("Super Cover Plus");
+    }
+
+    @FXML
+    public void handleBasicInsurance()
+    {
+        insuranceTextfield.setText("Basic");
+    }
+
+    @SuppressWarnings("Duplicates")
+    public void clearSceen() {
         tableView.setVisible(false);
 
         infoLabel.setVisible(false);
@@ -427,6 +476,12 @@ public class Controller {
         weektoLabel.setVisible(false);
         weektoChoice.setVisible(false);
         weekfromChoice.setVisible(false);
+        autocamperLabel.setVisible(false);
+        weekFromFinalLabel.setVisible(false);
+        weekToFinalLabel.setVisible(false);
+        insuranceFinalLabel.setVisible(false);
+        insuranceLabel.setVisible(false);
+        totalPriceLabel.setVisible(false);
 
         confirmAutoChoiceButton.setVisible(false);
         confirmCustomerInfo.setVisible(false);
@@ -440,6 +495,14 @@ public class Controller {
         streetTextfield.setVisible(false);
         zipTextfield.setVisible(false);
         passwordField.setVisible(false);
+        autocamperTextField.setVisible(false);
+        weekFromTextField.setVisible(false);
+        weekToTextField.setVisible(false);
+        insuranceTextfield.setVisible(false);
+        totalPriceTextField.setVisible(false);
+
+        basicRadiobutton.setVisible(false);
+        superRadiobutton.setVisible(false);
 
         frontImage.setVisible(false);
     }

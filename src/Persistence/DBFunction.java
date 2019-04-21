@@ -7,11 +7,12 @@ import Domain.Autocamper.StandardCamper;
 import Domain.Customer;
 import Foundation.DB;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Lukas
@@ -235,9 +236,33 @@ public abstract class DBFunction {
         return availableCampers;
     }
 
+    public static int registerReservation(String VINNumber, String phoneNo, String season) throws SQLException
+    {
+        Calendar cal = Calendar.getInstance();
+        Date date = cal.getTime();
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 
+        PreparedStatement ps = con.prepareStatement("EXEC inputReservation ?,?,?,?");
+        ps.setDate(1,sqlDate);
+        ps.setString(2,VINNumber);
+        ps.setString(3,getDriverlicenseNo(phoneNo));
+        ps.setString(4,season);
 
+        return ps.executeUpdate();
+    }
 
+    public static String getDriverlicenseNo(String phoneNo) throws SQLException
+    {
+        PreparedStatement ps = con.prepareStatement("SELECT fldDriverLicenceNo FROM tblCustomer WHERE fldPhoneNumber = ?");
+        ps.setString(1,phoneNo);
+
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+
+        String driverlicence = rs.getString(1);
+
+        return driverlicence;
+    }
 
 
 
