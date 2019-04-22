@@ -251,6 +251,11 @@ public abstract class DBFunction {
         return ps.executeUpdate();
     }
 
+    public static void registerWeeksRented(String weekfrom, String weekto)
+    {
+
+    }
+
     public static String getDriverlicenseNo(String phoneNo) throws SQLException
     {
         PreparedStatement ps = con.prepareStatement("SELECT fldDriverLicenceNo FROM tblCustomer WHERE fldPhoneNumber = ?");
