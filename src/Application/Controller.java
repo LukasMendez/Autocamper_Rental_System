@@ -82,6 +82,9 @@ public class Controller {
     @FXML
     private Label totalPriceLabel;
 
+    @FXML
+    private Label signInLabel;
+
 
     //ChoiceBoxes
     @FXML
@@ -147,7 +150,7 @@ public class Controller {
      * <p>
      * If loginMode is true:
      * <p>
-     * Will //TODO WRITE WHAT IT ACTUALLY DOES
+     * Will go to the reservation part
      */
 
 
@@ -205,6 +208,8 @@ public class Controller {
                     infoLabel.setText("PASSWORD WAS CORRECT");
 
                     setReservationScreen();
+
+                    signInLabel.setText("Logged in as: " + currentCustomer.getName());
 
                 } else {
 
@@ -476,6 +481,7 @@ public class Controller {
     @SuppressWarnings("Duplicates")
     public void clearScene() {
         tableView.setVisible(false);
+        signInLabel.setText("Not logged in");
 
         infoLabel.setVisible(false);
         weekfromLabel.setVisible(false);

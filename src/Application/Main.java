@@ -20,6 +20,7 @@ public class Main extends Application {
         primaryStage.getIcons().add(new Image("Domain/Autocamper/Images/camper-pngrepo-com.png"));
         primaryStage.setTitle("Auto Camper Rental System");
         primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.setResizable(false);
         primaryStage.show();
 
 
