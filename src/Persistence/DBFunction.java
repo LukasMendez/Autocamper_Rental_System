@@ -175,6 +175,12 @@ public abstract class DBFunction {
 
     }
 
+
+    /**
+     * The method calls an stored procedure in SQL which returns all the autocampers in the database
+     * @return ArrayList of all the autocampers in the database
+     * @throws SQLException
+     */
     public static ArrayList<Autocamper> getAllAutocampers() throws SQLException
     {
         ArrayList<Autocamper> allAutocampers = new ArrayList<>();
@@ -204,7 +210,15 @@ public abstract class DBFunction {
         return allAutocampers;
     }
 
-    public static ArrayList<Autocamper> getAvaliableCampers(ArrayList<Autocamper> autocampersAL, String weekFrom, String weekTo) throws SQLException
+    /**
+     * This method checks every autocamper provided in the arraylist, in the database by VINNumber and week from and week to, to see if it is registered in the weeksRented table
+     * @param autocampersAL an ArrayList of type Autocamper
+     * @param weekFrom the week the rent starts
+     * @param weekTo the week the rent ends
+     * @return an ArrayList of type Autocamper, of all the available autocampers in the chosen period
+     * @throws SQLException
+     */
+    public static ArrayList<Autocamper> getAvailableCampers(ArrayList<Autocamper> autocampersAL, String weekFrom, String weekTo) throws SQLException
     {
         ArrayList<Autocamper> availableCampers = new ArrayList<>();
 
@@ -225,7 +239,7 @@ public abstract class DBFunction {
                 System.out.println(available);
             }
 
-
+            //If the autocamper isn't registered in the weeksRented table, it's added to the availableCampers arrayList
             if (available == 0)
             {
                 availableCampers.add(autocamper);
@@ -236,6 +250,14 @@ public abstract class DBFunction {
         return availableCampers;
     }
 
+    /**
+     * Inserts the information needed to register a reservation
+     * @param VINNumber
+     * @param phoneNo
+     * @param season
+     * @return int for true/false
+     * @throws SQLException
+     */
     public static int registerReservation(String VINNumber, String phoneNo, String season) throws SQLException
     {
         Calendar cal = Calendar.getInstance();
@@ -256,6 +278,12 @@ public abstract class DBFunction {
 
     }
 
+    /**
+     * Returns the driverlicence no from the phoneNo
+     * @param phoneNo
+     * @return driverlicence
+     * @throws SQLException
+     */
     public static String getDriverlicenseNo(String phoneNo) throws SQLException
     {
         PreparedStatement ps = con.prepareStatement("SELECT fldDriverLicenceNo FROM tblCustomer WHERE fldPhoneNumber = ?");

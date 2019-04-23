@@ -7,15 +7,12 @@ import Domain.Autocamper.StandardCamper;
 import Domain.Customer;
 import Foundation.DB;
 import Persistence.DBFunction;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
@@ -129,7 +126,7 @@ public class Controller {
 
         loginMode = false;
 
-        clearSceen();
+        clearScene();
 
         headLabel.setText("Please enter your phone number");
         checkPhoneNoButton.setVisible(true);
@@ -239,7 +236,7 @@ public class Controller {
         //Sets all the autocampers in the tableview
         setTableView(DBFunction.getAllAutocampers());
 
-        clearSceen();
+        clearScene();
 
         //Declaring the choices in the choiceboxes
         weekfromChoice.setItems(FXCollections.observableArrayList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"));
@@ -263,19 +260,19 @@ public class Controller {
      */
     @FXML
     private void handleSearch() throws SQLException {
-        setTableView(DBFunction.getAvaliableCampers(DBFunction.getAllAutocampers(), weekfromChoice.getValue(), (String) weektoChoice.getValue()));
+        setTableView(DBFunction.getAvailableCampers(DBFunction.getAllAutocampers(), weekfromChoice.getValue(), (String) weektoChoice.getValue()));
         confirmAutoChoiceButton.setVisible(true);
     }
 
 
     /**
-     * Gets the selected autocamper
+     * Gets the selected autocamper and display the customer choices, so the customer can confirm his/her choices
      */
     @FXML
     private void handleChoice() {
         Autocamper selectedAutocamper = tableView.getSelectionModel().getSelectedItem();
 
-        clearSceen();
+        clearScene();
 
         insuranceLabel.setVisible(true);
 
@@ -305,9 +302,6 @@ public class Controller {
         totalPriceTextField.setText("7000");
 
         confirmReservationButton.setVisible(true);
-
-
-        //TODO Maybe change the scene and register the reservation
     }
 
 
@@ -317,16 +311,13 @@ public class Controller {
     @FXML
     private void loginScreen() {
 
-        clearSceen();
+        clearScene();
 
-        // Will make sure that only phone number text field is displayed
+        // Will make sure that the phone number text field is displayed
         phoneNoTextfield.setVisible(true);
         passwordField.setVisible(true);
         confirmCustomerInfo.setVisible(true);
         licenceTextfield.setVisible(false);
-
-        // Will make sure that zip code text field and street text field are removed, so that the password field is
-        // the only visible node in the middleHBox and also aligned perfectly with the phone number text field
 
         infoLabel.setVisible(true);
         infoLabel.setTextFill(Color.BLACK);
@@ -371,14 +362,11 @@ public class Controller {
 
     private void rebuildRegistrationPage() {
 
-        clearSceen();
+        clearScene();
 
         phoneNoTextfield.setVisible(true);
         nameTextfield.setVisible(true);
         licenceTextfield.setVisible(true);
-
-        // Will make sure the nodes back in its old order
-
         streetTextfield.setVisible(true);
         zipTextfield.setVisible(true);
         passwordField.setVisible(true);
@@ -431,19 +419,28 @@ public class Controller {
         tableView.setItems(data);
     }
 
+
+    /**
+     * displays the home screen
+     */
     @FXML
     public void handleHome() {
-        clearSceen();
+        clearScene();
 
         headLabel.setText("Welcome to Wagners Auto Camper Rental Service");
         frontImage.setVisible(true);
         bigMakeReservationButton.setVisible(true);
     }
 
+
+    /**
+     * Registers the reservation in the database and confirms or decline the reservation, and inform the customer on screen
+     * @throws SQLException
+     */
     @FXML
     public void handleConfirmReservation() throws SQLException
     {
-        clearSceen();
+        clearScene();
 
         if (DBFunction.registerReservation(autocamperTextField.getText(),phoneNoTextfield.getText(), "low") == 1)
         {
@@ -455,20 +452,29 @@ public class Controller {
         }
     }
 
+    /**
+     * A handler for super insurance radiobutton
+     */
     @FXML
     public void handleSuperInsurance()
     {
         insuranceTextfield.setText("Super Cover Plus");
     }
 
+    /**
+     * A handler for basic insurance radiobutton
+     */
     @FXML
     public void handleBasicInsurance()
     {
         insuranceTextfield.setText("Basic");
     }
 
+    /**
+     * Clears the scene from all nodes, except the header
+     */
     @SuppressWarnings("Duplicates")
-    public void clearSceen() {
+    public void clearScene() {
         tableView.setVisible(false);
 
         infoLabel.setVisible(false);
